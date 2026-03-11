@@ -1,0 +1,13 @@
+{{ define "index.tmpl" }}
+    {{ template "header" . }}
+    <h2>Inicio</h2>
+    <p>Bienvenido al sitio de ejemplo de Transbank SDK Go<p>
+    <p>Aqui encontrará la implementación de los servicios de Transbank usando su ambiente de integración. Cada servicio ya tiene seteada sus credenciales desde el controlador<p>
+    <ul>
+        <li><a href="/webpayplus">Webpay Plus</a></li>
+        <li><a href="/webpayplusdeferred">Webpay Plus Diferido</a></li>
+        <li><a href="/webpayplusmall">Webpay Plus Mall</a></li>
+        <li><a href="/webpayplusmalldeferred">Webpay Plus Mall Diferido</a></li>
+    </ul>
+    {{ template "footer" . }}
+{{ end }}

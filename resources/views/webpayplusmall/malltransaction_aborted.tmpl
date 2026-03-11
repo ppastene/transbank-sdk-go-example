@@ -1,0 +1,12 @@
+{{ define "webpayplusmall/malltransaction_aborted.tmpl" }}
+    {{ template "header" . }}
+    <h2>{{ .title }}</h2>
+        <h3>Request</h3>
+        <ul>
+            {{ range $key, $value := .queryParams }}
+                <li>{{ $key }}: {{ $value }}</li>
+            {{ end }}
+        </ul>
+        <p>El pago ha sido abortado desde la pagina de pago de Transbank. Por tanto el token queda nulo y no se podrá efectuar un pago</p>
+    {{ template "footer" . }}
+{{ end }}

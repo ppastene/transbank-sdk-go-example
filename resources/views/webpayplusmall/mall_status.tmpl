@@ -1,0 +1,35 @@
+{{ define "webpayplusmall/mall_status.tmpl" }}
+    {{ template "header" . }}
+    <h2>{{ .title }}</h2>
+    <h3>Request</h3>
+    <ul>
+        {{ range $key, $value := .request }}
+            <li>{{ $key }}: {{ $value }}</li>
+        {{ end }}
+    </ul>
+    <h3>Response</h3>
+    <ul>
+        <li>Vci: {{ .response.Vci }}</li>
+        <li>BuyOrder: {{ .response.BuyOrder }}</li>
+        <li>SessionId: {{ .response.SessionId }}</li>
+        <li>CardDetails: {{ .response.CardDetail }}</li>
+        <li>AccountingDate: {{ .response.AccountingDate }}</li>
+        <li>TransactionDate: {{ .response.TransactionDate }}</li>
+        {{ range .response.Details }}
+        <span>Details</span>
+        <ul>
+            <li>AuthorizationCode: {{ .AuthorizationCode }}</li>
+            <li>PaymentTypeCode: {{ .PaymentTypeCode }}</li>
+            <li>ResponseCode: {{ .ResponseCode }}</li>
+            <li>Amount: {{ .Amount }}</li>
+            <li>InstallmentsAmount: {{ .InstallmentsAmount }}</li>
+            <li>InstallmentsNumber: {{ .InstallmentsNumber }}</li>
+            <li>CommerceCode: {{ .CommerceCode }}</li>
+            <li>BuyOrder: {{ .BuyOrder }}</li>
+            <li>Status: {{ .Status }}</li>
+            <li>Balance: {{ .Balance }}</li>
+        </ul>
+        {{ end }}
+    </ul>
+    {{ template "footer" . }}
+{{ end }}

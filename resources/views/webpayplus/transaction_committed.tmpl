@@ -1,0 +1,36 @@
+{{ define "webpayplus/transaction_committed.tmpl" }}
+    {{ template "header" . }}
+    <h2>{{ .title }}</h2>
+    <p>La transacción ha sido: </p>
+    {{ if .isApproved }}
+        <b>Aprobada</b>
+    {{ else }}
+        <b>Rechazada</b>
+    {{ end }}
+    <p>Una vez que el pago haya sido confirmado independiente si este fue aprobado o rechazado, el usuario es redirigido a la url de retorno junto con el token. Dicho token es enviado devuelta a Transbank y con eso se confirma la transacción.</p>
+    <h3>Request</h3>
+    <ul>
+    {{ range $key, $value := .request }}
+        <li>{{ $key }}: {{ $value }}</li>
+    {{ end }}
+    </ul>
+    <h3>Estado de la transacción</h3>
+    <p>Este es el estado de la transacción:</p>
+    <ul>
+        <li>Vci: {{ .response.Vci }}</li>
+        <li>Amount: {{ .response.Amount }}</li>
+        <li>Status: {{ .response.Status }}</li>
+        <li>BuyOrder: {{ .response.BuyOrder }}</li>
+        <li>SessionId: {{ .response.SessionId }}</li>
+        <li>CardDetails: {{ .response.CardDetail }}</li>
+        <li>AccountingDate: {{ .response.AccountingDate }}</li>
+        <li>TransactionDate: {{ .response.TransactionDate }}</li>
+        <li>AuthorizationCode: {{ .response.AuthorizationCode }}</li>
+        <li>PaymentTypeCode: {{ .response.PaymentTypeCode }}</li>
+        <li>ResponseCode: {{ .response.ResponseCode }}</li>
+        <li>InstallmentsAmount: {{ .response.InstallmentsAmount }}</li>
+        <li>InstallmentsNumber: {{ .response.InstallmentsNumber }}</li>
+        <li>Balance: {{ .response.Balance }}</li>
+    </ul>
+    {{ template "footer" . }}
+{{ end }}'

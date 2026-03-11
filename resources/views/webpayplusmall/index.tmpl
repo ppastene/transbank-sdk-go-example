@@ -1,0 +1,87 @@
+{{ define "webpayplusmall/index.tmpl" }}
+    {{ template "header" . }}
+    <h2>{{ .title }}</h2>
+    <h3>Create</h3>
+    <p>Use este formulario para crear la transacción. De ser exitosa obtendrá de Transbank el token y la URL para proceder con el pago</p>
+    <form class="webpay_form" action="create" method="POST">
+        <!-- INICIO DETALLE HIJO -->
+        <label for="merchant_1_commerce_code">Código comercio del comercio #1</label>
+        <input id="merchant_1_commerce_code" name="detail[0][commerce_code]" value="597055555582" readonly>
+
+        <label for="merchant_1_amount">Monto comercio #1</label>
+        <input id="merchant_1_amount" name="detail[0][amount]" value="10000">
+
+        <label for="merchant_1_buy_order">Orden de compra comercio #1</label>
+        <input id="merchant_1_buy_order" name="detail[0][buy_order]" value="11223344">
+        <label for="enabled_1">Habilitar</label>
+        <input id="enabled_1" type="checkbox" name="detail[0][enabled]" checked>
+        <br>
+        <label for="merchant_2_commerce_code">Código comercio del comercio #2</label>
+        <input id="merchant_2_commerce_code" name="detail[1][commerce_code]" value="597055555583" readonly>
+
+        <label for="merchant_2_amount">Monto comercio #2</label>
+        <input id="merchant_2_amount" name="detail[1][amount]" value="20000">
+
+        <label for="merchant_2_buy_order">Orden de compra comercio #2</label>
+        <input id="merchant_2_buy_order" name="detail[1][buy_order]" value="55667788">
+        <label for="enabled_2">Habilitar</label>
+        <input id="enabled_2" type="checkbox" name="detail[1][enabled]" checked>
+        <!-- FIN DETALLE HIJO -->
+        <br>
+        <!-- INICIO DETALLE PADRE -->
+        <label for="parent_merchant_buy_order">Orden de compra comercio Padre</label>
+        <input id="parent_merchant_buy_order" name="buy_order" value="buyOrder1234"/>
+
+        <label for="session_id_parent">Session id comercio padre</label>
+        <input id="session_id_parent" name="session_id" value="session123456">
+        <!-- FIN DETALLE PADRE -->
+        <br>
+        <label for="return_url">URL de retorno</label>
+        {{ if .isDeferred }}
+            <input id="return_url" name="return_url" value="{{ .returnUrl }}/webpayplusmalldeferred/returnUrl"/>
+        {{ else }}
+            <input id="return_url" name="return_url" value="{{ .returnUrl }}/webpayplusmall/returnUrl"/>
+        {{ end }}
+
+        <button type="submit">Aceptar</button>
+    </form>
+    <h3>Status</h3>
+    <p>La transacción está asociada a un token. Uselo para obtener información en los servidores de Transbank</p>
+    <form method="POST" action="status">
+        <label for="token">Token</label> <input type="text" value="" name="token">
+        <button type="submit">Obtener status</button>
+    </form>
+    <h3>Refund</h3>
+    <p>Use este formulario para ejecutar un reeembolso. Dentro de las primeras 3 horas de creada la transacción solo puede reembolsar el total de lo pagado (estado REVERSED).
+     <form method="POST" action="refund">
+        <label for="token">Token</label>
+        <input id="token" type="text" value="" name="token">
+        <label for="child_buy_order">Orden de Compra Hijo</label>
+        <input id="child_buy_order" type="text" value="" name="child_buy_order">
+        <label for="buy_order">Codigo de Comercio Hijo</label>
+        <input id="child_commerce_code" type="text" value="" name="child_commerce_code">
+        <label for="amount">Monto</label>
+        <input id="amount" type="text" value="1000" name="amount">
+        <button type="submit">Obtener reembolso</button>
+    </form>
+    {{ if .isDeferred }}
+    <h3>Capture</h3>
+    <p>NOTA: Solo puede realizarse cuando el codigo de comercio está habilitado para realizar capturas (como este) y el pago se haya realizado con tarjeta de credito.</p>
+    <p>Al pagar con tarjeta de credito Transbank recibe un cupo del cual el vendedor confirma para liquidar el saldo del comprador. EL monto a capturar puede ser igual o menor al pagado.</p>
+    <p>Si en 7 dias no se confirma la captura Transbank anula la transacción y el cupo se devuelve al comprador.</p>
+    <form method="post" action="capture">
+        <label for="token">Token</label>
+        <input type="text" name="token" value="">
+        <label for="child_buy_order">Orden de compra Hijo</label>
+        <input type="text" name="child_commerce_code" value="">
+        <label for="child_commerce_code">Codigo de Comercio Hijo</label>
+        <input type="text" name="child_buy_order" value="">
+        <label for="child_authorization_code">Código de autorización Hijo</label>
+        <input type="text" name="child_authorization_code" value="">
+        <label for="capture_amount">Monto</label>
+        <input type="text" name="capture_amount" value="1000">
+        <button type="submit">Capturar</button>
+    </form>
+    {{ end }}
+    {{ template "footer" . }}
+{{ end }}

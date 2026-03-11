@@ -1,0 +1,65 @@
+{{ define "webpayplus/index.tmpl" }}
+    {{ template "header" . }}
+    <h2>{{ .title }}</h2>
+    <a href="../">Volver atrás</a>
+    <h3>Create</h3>
+    <p>Use este formulario para crear la transacción. De ser exitosa obtendrá de Transbank el token y la URL para proceder con el pago</p>
+    <form class="webpay_form" action="create" method="POST">
+        <label for="buy_order">
+            Orden de compra
+        </label>
+        <input id="buy_order" name="buy_order" value="123456"/>
+
+        <label for="session_id">
+            Id de sesión
+        </label>
+        <input id="session_id" name="session_id" value="session123456" />
+
+        <label for="amount">
+            Monto
+        </label>
+        <input id="amount" name="amount" value="10000"/>
+
+        <label for="return_url">
+            URL de retorno
+        </label>
+        {{ if .isDeferred }}
+            <input id="return_url" name="return_url" value="{{ .returnUrl }}/webpayplusdeferred/returnUrl">
+        {{ else }}
+            <input id="return_url" name="return_url" value="{{ .returnUrl }}/webpayplus/returnUrl">
+        {{ end }}
+
+        <button type="submit">Aceptar</button>
+    </form>
+    <h3>Status</h3>
+    <p>La transacción está asociada a un token. Uselo para obtener información en los servidores de Transbank</p>
+    <form method="post" action="status">
+        <label for="token">Token</label> <input type="text" value="" name="token">
+        <button type="submit">Obtener status</button>
+    </form>
+    <h3>Refund</h3>
+    <p>Use este formulario para ejecutar un reeembolso. Dentro de las primeras 3 horas de creada la transacción solo puede reembolsar el total de lo pagado (estado REVERSED).
+     <form method="post" action="refund">
+        <label for="token">Token</label> <input type="text" value="" name="token">
+        <label for="token">Monto</label> <input type="text" value="1000" name="amount">
+        <button type="submit">Obtener reembolso</button>
+    </form>
+    {{ if .isDeferred }}
+    <h3>Capture</h3>
+    <p>NOTA: Solo puede realizarse cuando el codigo de comercio está habilitado para realizar capturas (como este) y el pago se haya realizado con tarjeta de credito.</p>
+    <p>Al pagar con tarjeta de credito Transbank recibe un cupo del cual el vendedor confirma para liquidar el saldo del comprador. EL monto a capturar puede ser igual o menor al pagado.</p>
+    <p>Si en 7 dias no se confirma la captura Transbank anula la transacción y el cupo se devuelve al comprador.</p>
+    <form method="post" action="capture">
+        <label for="token">Token</label>
+        <input type="text" name="token" value="">
+        <label for="buy_order">Orden de compra</label>
+        <input type="text" name="buy_order" value="123456">
+        <label for="authorization_code">Código de autorización</label>
+        <input type="text" name="authorization_code" value="">
+        <label for="capture_amount">Monto</label>
+        <input type="text" name="capture_amount" value="1000">
+        <button type="submit">Capturar</button>
+    </form>
+    {{ end }}
+    {{ template "footer" . }}
+{{ end }}

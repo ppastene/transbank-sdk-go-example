@@ -1,0 +1,22 @@
+{{ define "webpayplus/transaction_refunded.tmpl" }}
+    {{ template "header" . }}
+    <h2>{{ .title }}</h2>
+    <h3>Request</h3>
+    <ul>
+        {{ range $key, $value := .request }}
+            <li>{{ $key }}: {{ $value }}</li>
+        {{ end }}
+    </ul>
+    <p>Si se efectua un reembolso de la transacción en menos de 3 horas solo se puede reembolsar el total de lo pagado, con eso el estado de la transacción pasa a REVERSED.</p>
+    <p>Tras las 3 horas dependiendo de las condiciones de pago se puede pedir un reembolso parcial por tanto el estado pasa a NULLIFIED o PARTIALLY_NULLIFIED.</p>
+    <h3>Response</h3>
+    <ul>
+        <li>Type: {{ .response.Type }}</li>
+        <li>AuthorizationCode: {{ .response.AuthorizationCode }}</li>
+        <li>AuthorizationDate: {{ .response.AuthorizationDate }}</li>
+        <li>NullifiedAmount: {{ .response.NullifiedAmount }}</li>
+        <li>Balance: {{ .response.Balance }}</li>
+        <li>ResponseCode: {{ .response.ResponseCode }}</li>
+    </ul>
+    {{ template "footer" . }}
+{{ end }}

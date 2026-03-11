@@ -1,0 +1,24 @@
+{{ define "webpayplusmall/malltransaction_created.tmpl" }}
+    {{ template "header" . }}
+    <h2>{{ .title }}</h2>
+    <h3>Request</h3>
+    <ul>
+        {{ range $key, $value := .request }}
+            <li>{{ $key }}: {{ $value }}</li>
+        {{ end }}
+    </ul>
+    <h3 class="font-bold">Response:</h3>
+    <ul>
+        <li>Token: {{ .response.Token }}</li>
+        <li>Url: {{ .response.Url }}</li>
+    </ul>
+
+    <p>Con los datos de la respuesta se puede efectuar el pago en Transbank. Tiene X minutos para efecutar el pago antes que Transbank anule el token.</p>
+    <p>Si abandona la pagina de pago este sitio lo redigirá a una pagina de "Transacción Abortada" y la transacción se anulará.</p>
+    <form method="GET" action="{{ .response.Url }}">
+        Token: <input name="token_ws" value={{ .response.Token }} />
+        <button type="submit">Pagar</button>
+    </form>
+    
+    {{ template "footer" . }}
+{{ end }}
