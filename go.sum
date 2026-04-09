@@ -488,8 +488,8 @@ github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINE
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRIccs7FGNTlIRMkT8wgtp5eCXdBlqhYGL6U=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/ppastene/transbank-sdk-go v0.1.1 h1:9ZtbFwZgqZNyp8YJeJNPVz8Utt0F96IeKjK0iMUNZkA=
-github.com/ppastene/transbank-sdk-go v0.1.1/go.mod h1:TLzCf4yYIRAtp4YInnvKy5DgMDBoQoVLr6UxO9S4f9M=
+github.com/ppastene/transbank-sdk-go v0.2.1 h1:g/2r4BQDEhAH2m/mB2q8Yp8fOWJ272t7T1X1xjyDjb0=
+github.com/ppastene/transbank-sdk-go v0.2.1/go.mod h1:TLzCf4yYIRAtp4YInnvKy5DgMDBoQoVLr6UxO9S4f9M=
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
 github.com/pterm/pterm v0.12.27/go.mod h1:PhQ89w4i95rhgE+xedAoqous6K9X+r6aSOI2eFF7DZI=
 github.com/pterm/pterm v0.12.29/go.mod h1:WI3qxgvoQFFGKGjGnJR849gU0TsEOvKn5Q8LlY1U7lg=

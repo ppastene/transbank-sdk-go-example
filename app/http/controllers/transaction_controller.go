@@ -6,19 +6,19 @@ import (
 
 	"github.com/goravel/framework/contracts/http"
 	"github.com/goravel/framework/facades"
-	webpay "github.com/ppastene/transbank-sdk-go"
+	"github.com/ppastene/transbank-sdk-go"
 )
 
 type TransactionController struct {
-	transaction *webpay.Transaction
+	transaction *transbank.WebpayPlusTransaction
 }
 
 func NewTransactionController() *TransactionController {
-	options := &webpay.Options{
+	options := &transbank.Options{
 		ApiKey:       "597055555532",
 		CommerceCode: "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C",
 	}
-	transaction := webpay.NewTransaction(options)
+	transaction := transbank.NewTransaction(options)
 	return &TransactionController{
 		transaction: transaction,
 	}
@@ -46,7 +46,7 @@ func (t *TransactionController) CreatedTransaction(ctx http.Context) http.Respon
 	buyOrder := ctx.Request().Input("buy_order")
 	sessionId := ctx.Request().Input("session_id")
 	returnUrl := ctx.Request().Input("return_url")
-	amountStr := ctx.Request().Input("amount")
+	amountStr := ctx.Request().Input("amount", "0")
 	amount, err := strconv.ParseFloat(amountStr, 64)
 	if err != nil {
 		return ctx.Response().Status(500).Json(map[string]any{

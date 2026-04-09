@@ -8,7 +8,7 @@ require (
 	github.com/goravel/gin v1.4.0
 	github.com/goravel/postgres v1.4.1
 	github.com/goravel/sqlite v1.4.0
-	github.com/ppastene/transbank-sdk-go v0.1.1
+	github.com/ppastene/transbank-sdk-go v0.2.1
 	github.com/stretchr/testify v1.11.1
 	google.golang.org/grpc v1.73.0
 )

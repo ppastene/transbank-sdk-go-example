@@ -6,19 +6,19 @@ import (
 
 	"github.com/goravel/framework/contracts/http"
 	"github.com/goravel/framework/facades"
-	webpay "github.com/ppastene/transbank-sdk-go"
+	"github.com/ppastene/transbank-sdk-go"
 )
 
 type MallTransactionController struct {
-	mallTransaction *webpay.MallTransaction
+	mallTransaction *transbank.WebpayPlusMallTransaction
 }
 
 func NewMallTransactionController() *MallTransactionController {
-	options := &webpay.Options{
+	options := &transbank.Options{
 		ApiKey:       "597055555535",
 		CommerceCode: "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C",
 	}
-	transaction := webpay.NewMallTransaction(options)
+	transaction := transbank.NewMallTransaction(options)
 	return &MallTransactionController{
 		mallTransaction: transaction,
 	}
@@ -43,7 +43,7 @@ func (m *MallTransactionController) Index(ctx http.Context) http.Response {
 
 func (m *MallTransactionController) CreatedTransaction(ctx http.Context) http.Response {
 	request := ctx.Request().All()
-	var details []webpay.MallDetails
+	var details []transbank.WebpayPlusMallDetails
 	for i := 0; ; i++ {
 		amountKey := fmt.Sprintf("detail[%d][amount]", i)
 		val, exists := request[amountKey]
@@ -66,7 +66,7 @@ func (m *MallTransactionController) CreatedTransaction(ctx http.Context) http.Re
 
 		amount, _ := strconv.ParseFloat(amountStr, 64)
 
-		details = append(details, webpay.MallDetails{
+		details = append(details, transbank.WebpayPlusMallDetails{
 			Amount:       amount,
 			CommerceCode: commCode,
 			BuyOrder:     buyOrd,
