@@ -7,21 +7,26 @@ import (
 	"github.com/goravel/framework/contracts/http"
 	"github.com/goravel/framework/facades"
 	"github.com/ppastene/transbank-sdk-go"
+	"github.com/ppastene/transbank-sdk-go/webpayplus"
 )
 
 type MallTransactionDeferredController struct {
-	mallTransaction *transbank.WebpayPlusMallTransaction
+	mallTransaction *webpayplus.MallTransaction
 }
 
-func NewMallTransactionDeferredController() *MallTransactionDeferredController {
-	options := &transbank.Options{
-		ApiKey:       "597055555581",
-		CommerceCode: "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C",
+func NewMallTransactionDeferredController() (*MallTransactionDeferredController, error) {
+	options := transbank.Options{
+		Environment:  transbank.Integration,
+		CommerceCode: "597055555581",
+		ApiKey:       "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C",
 	}
-	transaction := transbank.NewMallTransaction(options)
+	transaction, err := webpayplus.NewMallTransaction(options)
+	if err != nil {
+		return nil, err
+	}
 	return &MallTransactionDeferredController{
 		mallTransaction: transaction,
-	}
+	}, nil
 }
 
 func (m *MallTransactionDeferredController) Index(ctx http.Context) http.Response {
@@ -43,7 +48,7 @@ func (m *MallTransactionDeferredController) Index(ctx http.Context) http.Respons
 
 func (m *MallTransactionDeferredController) CreatedTransaction(ctx http.Context) http.Response {
 	request := ctx.Request().All()
-	var details []transbank.WebpayPlusMallDetails
+	var details []webpayplus.MallDetails
 	for i := 0; ; i++ {
 		amountKey := fmt.Sprintf("detail[%d][amount]", i)
 		val, exists := request[amountKey]
@@ -66,7 +71,7 @@ func (m *MallTransactionDeferredController) CreatedTransaction(ctx http.Context)
 
 		amount, _ := strconv.ParseFloat(amountStr, 64)
 
-		details = append(details, transbank.WebpayPlusMallDetails{
+		details = append(details, webpayplus.MallDetails{
 			Amount:       amount,
 			CommerceCode: commCode,
 			BuyOrder:     buyOrd,

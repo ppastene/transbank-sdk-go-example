@@ -7,21 +7,26 @@ import (
 	"github.com/goravel/framework/contracts/http"
 	"github.com/goravel/framework/facades"
 	"github.com/ppastene/transbank-sdk-go"
+	"github.com/ppastene/transbank-sdk-go/webpayplus"
 )
 
 type TransactionController struct {
-	transaction *transbank.WebpayPlusTransaction
+	transaction *webpayplus.Transaction
 }
 
-func NewTransactionController() *TransactionController {
-	options := &transbank.Options{
-		ApiKey:       "597055555532",
-		CommerceCode: "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C",
+func NewTransactionController() (*TransactionController, error) {
+	options := transbank.Options{
+		Environment:  transbank.Integration,
+		CommerceCode: "597055555532",
+		ApiKey:       "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C",
 	}
-	transaction := transbank.NewTransaction(options)
+	transaction, err := webpayplus.NewTransaction(options)
+	if err != nil {
+		return nil, err
+	}
 	return &TransactionController{
 		transaction: transaction,
-	}
+	}, nil
 }
 
 func (t *TransactionController) Index(ctx http.Context) http.Response {

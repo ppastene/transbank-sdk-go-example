@@ -15,7 +15,11 @@ func Web() {
 		})
 	})
 	// Webpay Plus
-	transactionController := controllers.NewTransactionController()
+	transactionController, err := controllers.NewTransactionController()
+	if err != nil {
+		facades.Log().Errorf("Error creating transaction controller: %v", err)
+		panic(err)
+	}
 	facades.Route().Get("/webpayplus/", transactionController.Index)
 	facades.Route().Post("/webpayplus/create", transactionController.CreatedTransaction)
 	facades.Route().Any("/webpayplus/returnUrl", transactionController.CommitedTransaction)
@@ -23,7 +27,11 @@ func Web() {
 	facades.Route().Post("/webpayplus/refund", transactionController.RefundTransaction)
 
 	// Webpay Plus Diferido
-	transactionDeferredController := controllers.NewTransactionDeferredController()
+	transactionDeferredController, err := controllers.NewTransactionDeferredController()
+	if err != nil {
+		facades.Log().Errorf("Error creating transaction deferred controller: %v", err)
+		panic(err)
+	}
 	facades.Route().Get("/webpayplusdeferred/", transactionDeferredController.Index)
 	facades.Route().Post("/webpayplusdeferred/create", transactionDeferredController.CreatedTransaction)
 	facades.Route().Any("/webpayplusdeferred/returnUrl", transactionDeferredController.CommitedTransaction)
@@ -32,7 +40,11 @@ func Web() {
 	facades.Route().Post("/webpayplusdeferred/capture", transactionDeferredController.CaptureTransaction)
 
 	// Webpay Plus Mall
-	mallTransactionController := controllers.NewMallTransactionController()
+	mallTransactionController, err := controllers.NewMallTransactionController()
+	if err != nil {
+		facades.Log().Errorf("Error creating mall transaction controller: %v", err)
+		panic(err)
+	}
 	facades.Route().Get("/webpayplusmall", mallTransactionController.Index)
 	facades.Route().Post("/webpayplusmallcreate", mallTransactionController.CreatedTransaction)
 	facades.Route().Any("/webpayplusmall/returnUrl", mallTransactionController.CommitedTransaction)
@@ -40,7 +52,11 @@ func Web() {
 	facades.Route().Post("/webpayplusmall/refund", mallTransactionController.RefundTransaction)
 
 	// Webpay Plus Mall Deferred
-	mallTransactionDeferredController := controllers.NewMallTransactionDeferredController()
+	mallTransactionDeferredController, err := controllers.NewMallTransactionDeferredController()
+	if err != nil {
+		facades.Log().Errorf("Error creating mall transaction deferred controller: %v", err)
+		panic(err)
+	}
 	facades.Route().Get("/webpayplusmalldeferred/", mallTransactionDeferredController.Index)
 	facades.Route().Post("/webpayplusmalldeferred/create", mallTransactionDeferredController.CreatedTransaction)
 	facades.Route().Any("/webpayplusmalldeferred/returnUrl", mallTransactionDeferredController.CommitedTransaction)
