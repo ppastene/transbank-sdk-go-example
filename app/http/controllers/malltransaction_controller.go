@@ -39,9 +39,11 @@ func (m *MallTransactionController) Index(ctx http.Context) http.Response {
 		fullUrl = baseUrl
 	}
 	data := map[string]any{
-		"title":      "Webpay Plus Mall",
-		"returnUrl":  fullUrl,
-		"isDeferred": false,
+		"title":         "Webpay Plus Mall",
+		"returnUrl":     fullUrl,
+		"isDeferred":    false,
+		"commerceCode1": 597055555536,
+		"commerceCode2": 597055555537,
 	}
 	return ctx.Response().View().Make("webpayplusmall/index.tmpl", data)
 }

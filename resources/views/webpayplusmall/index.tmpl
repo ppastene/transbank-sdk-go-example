@@ -6,7 +6,7 @@
     <form class="webpay_form" action="create" method="POST">
         <!-- INICIO DETALLE HIJO -->
         <label for="merchant_1_commerce_code">Código comercio del comercio #1</label>
-        <input id="merchant_1_commerce_code" name="detail[0][commerce_code]" value="597055555582" readonly>
+        <input id="merchant_1_commerce_code" name="detail[0][commerce_code]" value="{{ .commerceCode1 }}" readonly>
 
         <label for="merchant_1_amount">Monto comercio #1</label>
         <input id="merchant_1_amount" name="detail[0][amount]" value="10000">
@@ -17,7 +17,7 @@
         <input id="enabled_1" type="checkbox" name="detail[0][enabled]" checked>
         <br>
         <label for="merchant_2_commerce_code">Código comercio del comercio #2</label>
-        <input id="merchant_2_commerce_code" name="detail[1][commerce_code]" value="597055555583" readonly>
+        <input id="merchant_2_commerce_code" name="detail[1][commerce_code]" value="{{ .commerceCode2 }}" readonly>
 
         <label for="merchant_2_amount">Monto comercio #2</label>
         <input id="merchant_2_amount" name="detail[1][amount]" value="20000">
