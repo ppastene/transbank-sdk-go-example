@@ -1,0 +1,20 @@
+{{ define "oneclick/mallinscription_start.tmpl" }}
+    {{ template "header" . }}
+    <h2>{{ .title }}</h2>
+    <h3>Request</h3>
+    <ul>
+        {{ range $key, $value := .request }}
+            <li>{{ $key }}: {{ $value }}</li>
+        {{ end }}
+    </ul>
+    <h3 class="font-bold">Response:</h3>
+    <ul>
+        <li>Token: {{ .response.Token }}</li>
+        <li>Url: {{ .response.UrlWebpay }}</li>
+    </ul>
+    <form method="PUT" action="{{ .response.UrlWebpay }}">
+        Token: <input name="TBK_TOKEN" value={{ .response.Token }} />
+        <button type="submit">Inscribir</button>
+    </form>
+    {{ template "footer" . }}
+{{ end }}

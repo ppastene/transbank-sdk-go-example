@@ -1,0 +1,20 @@
+{{ define "oneclick/malltransaction_refund.tmpl" }}
+    {{ template "header" . }}
+    <h2>{{ .title }}</h2>
+    <h3>Request</h3>
+    <ul>
+        {{ range $key, $value := .request }}
+            <li>{{ $key }}: {{ $value }}</li>
+        {{ end }}
+    </ul>
+    <h3>Response</h3>
+    <ul>
+        <li>Type: {{ .response.Type }}</li>
+        <li>AuthorizationCode: {{ .response.AuthorizationCode }}</li>
+        <li>AuthorizationDate: {{ .response.AuthorizationDate }}</li>
+        <li>NullifiedAmount: {{ .response.NullifiedAmount }}</li>
+        <li>Balance: {{ .response.Balance }}</li>
+        <li>ResponseCode: {{ .response.ResponseCode }}</li>
+    </ul>
+    {{ template "footer" . }}
+{{ end }}

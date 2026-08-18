@@ -63,4 +63,34 @@ func Web() {
 	facades.Route().Post("/webpayplusmalldeferred/status", mallTransactionDeferredController.GetTransactionStatus)
 	facades.Route().Post("/webpayplusmalldeferred/refund", mallTransactionDeferredController.RefundTransaction)
 	facades.Route().Post("/webpayplusmalldeferred/capture", mallTransactionDeferredController.CaptureTransaction)
+
+	// Oneclick Mall
+	oneclickController, err := controllers.NewOneclickController()
+	if err != nil {
+		facades.Log().Errorf("Error creating oneclick controller: %v", err)
+		panic(err)
+	}
+	facades.Route().Get("/oneclick/", oneclickController.Index)
+	facades.Route().Post("/oneclick/start", oneclickController.StartInscription)
+	facades.Route().Any("/oneclick/responseUrl", oneclickController.FinishInscription)
+	facades.Route().Post("/oneclick/delete", oneclickController.DeleteInscription)
+	facades.Route().Post("/oneclick/authorize", oneclickController.AuthorizeTransaction)
+	facades.Route().Post("/oneclick/status", oneclickController.StatusTransaction)
+	facades.Route().Post("/oneclick/refund", oneclickController.RefundTransaction)
+
+	// Oneclick Mall Deferred
+	oneclickDefereedController, err := controllers.NewOneclickDeferredController()
+	if err != nil {
+		facades.Log().Errorf("Error creating oneclick controller: %v", err)
+		panic(err)
+	}
+	facades.Route().Get("/oneclickdeferred/", oneclickDefereedController.Index)
+	facades.Route().Post("/oneclickdeferred/start", oneclickDefereedController.StartInscription)
+	facades.Route().Any("/oneclickdeferred/responseUrl", oneclickDefereedController.FinishInscription)
+	facades.Route().Post("/oneclickdeferred/delete", oneclickDefereedController.DeleteInscription)
+	facades.Route().Post("/oneclickdeferred/authorize", oneclickDefereedController.AuthorizeTransaction)
+	facades.Route().Post("/oneclickdeferred/status", oneclickDefereedController.StatusTransaction)
+	facades.Route().Post("/oneclickdeferred/refund", oneclickDefereedController.RefundTransaction)
+	facades.Route().Post("/oneclickdeferred/capture", oneclickDefereedController.CaptureTransaction)
+
 }

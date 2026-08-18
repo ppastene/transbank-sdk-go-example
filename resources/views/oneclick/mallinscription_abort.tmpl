@@ -1,0 +1,12 @@
+{{ define "oneclick/mallinscription_abort.tmpl" }}
+    {{ template "header" . }}
+    <h2>{{ .title }}</h2>
+    <p>La inscripción ha sido abortada</p>
+    <h3>Query Params</h3>
+    <ul>
+        {{ range $key, $value := .queryParams }}
+            <li>{{ $key }}: {{ $value }}</li>
+        {{ end }}
+    </ul>
+    {{ template "footer" . }}
+{{ end }}

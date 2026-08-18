@@ -1,0 +1,101 @@
+{{ define "oneclick/index.tmpl" }}
+    {{ template "header" . }}
+    <h2>{{ .title }}</h2>
+    <a href="../">Volver atrás</a>
+    <h3>Start Inscription</h3>
+    <p>Use este formulario para crear el proceso de inscripcion. De ser exitosa obtendrá de Transbank el token y la URL para proceder con la inscripcion</p>
+    <form class="webpay_form" action="start" method="POST">
+        <label for="username">Username</label>
+        <input id="username" name="username" value="usuario1234"/>
+        <label for="email">Email</label>
+        <input id="email" name="email" value="mail1234@test.cl" />
+        <label for="response_url">URL de retorno</label>
+        {{ if .isDeferred }}
+            <input id="response_url" name="response_url" value="{{ .responseUrl }}/oneclickdeferred/responseUrl">
+        {{ else }}
+            <input id="response_url" name="response_url" value="{{ .responseUrl }}/oneclick/responseUrl">
+        {{ end }}
+        <button type="submit">Aceptar</button>
+    </form>
+    <h3>Delete Inscription</h3>
+    <p>Use este formulario para eliminar un usuario ya inscrito</p>
+    <form action="delete" method="POST">
+        <label for="tbk_user">tbkUser</label> <input type="text" value="" name="tbk_user">
+        <label for="username">Username</label> <input type="text" value="" name="username">
+        <button type="submit">Eliminar</button>
+    </form>
+    <br>
+    <hr>
+    <h3>Authorize Transaction</h3>
+    <p>Una vez hecha la inscripción, use este formulario para efectuar transacciones</p>
+        <form class="webpay_form" action="authorize" method="POST">
+        <!-- INICIO DETALLE HIJO -->
+        <label for="commerce_store_1">Código comercio del comercio #1</label>
+        <input id="commerce_store_1" name="detail[0][commerce_code]" value="{{ .commerceCode1 }}" readonly>
+
+        <label for="buy_order_child1">Orden de compra comercio #1</label>
+        <input id="buy_order_child1" name="detail[0][buy_order]" value="11223344">
+
+        <label for="amount1">Monto comercio #1</label>
+        <input id="amount1" name="detail[0][amount]" value="10000">
+
+        <label for="installments_number1">Cuotas comercio #1</label>
+        <input id="installments_number1" name="detail[0][installments_number]" value="2">
+        
+        <label for="enabled_1">Habilitar</label>
+        <input id="enabled_1" type="checkbox" name="detail[0][enabled]" checked>
+        <br>
+        <label for="commerce_store_2">Código comercio del comercio #2</label>
+        <input id="commerce_store_2" name="detail[1][commerce_code]" value="{{ .commerceCode2 }}" readonly>
+
+        <label for="buy_order_child2">Orden de compra comercio #2</label>
+        <input id="buy_order_child2" name="detail[1][buy_order]" value="55667788">
+
+        <label for="amount2">Monto comercio #2</label>
+        <input id="amount2" name="detail[1][amount]" value="10000">
+
+        <label for="installments_number2">Cuotas comercio #2</label>
+        <input id="installments_number2" name="detail[1][installments_number]" value="5">
+        
+        <label for="enabled_2">Habilitar</label>
+        <input id="enabled_2" type="checkbox" name="detail[1][enabled]" checked>
+        <!-- FIN DETALLE HIJO -->
+        <br>
+        <!-- INICIO DETALLE PADRE -->
+        <label for="tbk_user">tbkUser</label> <input type="text" value="" name="tbk_user">
+        <label for="username">Username</label> <input type="text" value="" name="username">
+        <label for="buy_order">Buy Order</label> <input type="text" value="" name="buy_order">
+        <!-- FIN DETALLE PADRE -->
+        <button type="submit">Aceptar</button>
+    </form>
+
+    <h3>Status</h3>
+    <p>La transacción está asociada a una orden de compra. Use esta para obtener información en los servidores de Transbank</p>
+    <form method="post" action="status">
+        <label for="buy_order">Orden de compra</label> <input type="text" value="" name="buy_order">
+        <button type="submit">Obtener status</button>
+    </form>
+    <h3>Refund</h3>
+    <p>Use este formulario para ejecutar un reembolso. Dentro de las primeras 3 horas de creada la transacción solo puede reembolsar el total de lo pagado.</p>
+    <form method="post" action="refund">
+        <label for="refund_buy_order">Orden de compra</label> <input type="text" value="" name="buy_order">
+        <label for="refund_commerce_code">Código de comercio hijo</label> <input type="text" value="" name="child_commerce_code">
+        <label for="refund_detail_buy_order">Orden de compra hijo</label> <input type="text" value="" name="child_buy_order">
+        <label for="refund_amount">Monto</label> <input type="text" value="1000" name="amount">
+        <button type="submit">Obtener reembolso</button>
+    </form>
+    {{ if .isDeferred }}
+    <h3>Capture</h3>
+    <p>NOTA: Solo puede realizarse cuando el codigo de comercio está habilitado para realizar capturas (como este) y el pago se haya realizado con tarjeta de credito.</p>
+    <p>Al pagar con tarjeta de credito Transbank recibe un cupo del cual el vendedor confirma para liquidar el saldo del comprador. EL monto a capturar puede ser igual o menor al pagado.</p>
+    <p>Si en 7 dias no se confirma la captura Transbank anula la transacción y el cupo se devuelve al comprador.</p>
+    <form method="post" action="capture">
+        <label for="capture_buy_order">Orden de compra Hjio</label> <input type="text" value="" name="buy_order">
+        <label for="capture_commerce_code">Código de Comercio hijo</label> <input type="text" value="" name="child_commerce_code">
+        <label for="capture_auth_code">Código de autorización</label> <input type="text" value="" name="authorization_code">
+        <label for="capture_amount">Monto</label> <input type="text" value="1000" name="capture_amount">
+        <button type="submit">Capturar</button>
+    </form>
+    {{ end }}
+    {{ template "footer" . }}
+{{ end }}

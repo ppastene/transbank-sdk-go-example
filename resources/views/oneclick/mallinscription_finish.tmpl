@@ -1,0 +1,21 @@
+{{ define "oneclick/mallinscription_finish.tmpl" }}
+    {{ template "header" . }}
+    <h2>{{ .title }}</h2>
+    <p>La inscripción ha sido aprobada </p>
+    <h3>Request</h3>
+    <ul>
+    {{ range $key, $value := .request }}
+        <li>{{ $key }}: {{ $value }}</li>
+    {{ end }}
+    </ul>
+    <h3>Estado de la inscripción</h3>
+    <p>Este es el estado de la inscripción:</p>
+     <ul>
+        <li>Response Code: {{ .response.ResponseCode }}</li>
+        <li>TbkUser: {{ .response.TbkUser }}</li>
+        <li>Authorization Code: {{ .response.AuthorizationCode }}</li>
+        <li>Card Type: {{ .response.CardType }}</li>
+        <li>Card Number: {{ .response.CardNumber }}</li>
+    </ul>
+    {{ template "footer" . }}
+{{ end }}
