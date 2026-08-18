@@ -45,7 +45,7 @@ func Web() {
 		facades.Log().Errorf("Error creating mall transaction controller: %v", err)
 		panic(err)
 	}
-	facades.Route().Get("/webpayplusmall", mallTransactionController.Index)
+	facades.Route().Get("/webpayplusmall/", mallTransactionController.Index)
 	facades.Route().Post("/webpayplusmallcreate", mallTransactionController.CreatedTransaction)
 	facades.Route().Any("/webpayplusmall/returnUrl", mallTransactionController.CommitedTransaction)
 	facades.Route().Post("/webpayplusmall/status", mallTransactionController.GetTransactionStatus)
