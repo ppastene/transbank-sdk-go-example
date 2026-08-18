@@ -2,8 +2,6 @@ module goravel
 
 go 1.25.0
 
-replace github.com/ppastene/transbank-sdk-go => /home/ppablo/Proyectos/transbank-sdk-go/
-
 require (
 	github.com/gin-gonic/gin v1.12.0
 	github.com/goravel/framework v1.18.0
