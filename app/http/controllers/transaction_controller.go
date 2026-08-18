@@ -83,7 +83,7 @@ func (t *TransactionController) CommitedTransaction(ctx http.Context) http.Respo
 			"title":       "Transacción Abortada",
 			"queryParams": queryParams,
 		}
-		return ctx.Response().View().Make("webpayplus/malltransaction_aborted.tmpl", data)
+		return ctx.Response().View().Make("webpayplus/transaction_aborted.tmpl", data)
 	}
 
 	// Si no está presente pues es un flujo normal
